@@ -1,0 +1,6 @@
+<!--pages/index/index.wxml-->
+<navigation-bar title="Weixin" showBack="{{false}}" textColor="black" backgroundColor="white" />
+
+<scroll-view class="scroll-area" scroll-y="true">
+  <text>Weixin</text>
+</scroll-view>
