@@ -1,0 +1,22 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="90" fill="#f8f9fa" stroke="#e9ecef" stroke-width="2"/>
+  
+  <!-- 购物车主体 -->
+  <path d="M60 80 L65 80 L70 120 L130 120 L135 80 L140 80" stroke="#6c757d" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- 购物车底部 -->
+  <path d="M70 120 L130 120" stroke="#6c757d" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- 购物车轮子 -->
+  <circle cx="85" cy="135" r="6" fill="#6c757d"/>
+  <circle cx="115" cy="135" r="6" fill="#6c757d"/>
+  
+  <!-- 购物车把手 -->
+  <path d="M60 80 L60 70 L55 65" stroke="#6c757d" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- 空状态装饰线 -->
+  <path d="M85 95 L115 95" stroke="#dee2e6" stroke-width="2" stroke-linecap="round"/>
+  <path d="M85 105 L110 105" stroke="#dee2e6" stroke-width="2" stroke-linecap="round"/>
+  
+  <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6c757d">购物车是空的</text>
+</svg>
