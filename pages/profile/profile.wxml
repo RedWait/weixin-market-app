@@ -1,0 +1,52 @@
+<!--pages/profile/profile.wxml-->
+<navigation-bar title="我的" showBack="{{false}}" textColor="black" backgroundColor="white" />
+
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-section">
+    <view class="user-info" bindtap="onAvatarTap">
+      <image src="{{userInfo.avatarUrl}}" class="avatar" mode="aspectFill" />
+      <view class="user-details">
+        <view class="nickname">{{userInfo.nickName}}</view>
+        <view wx:if="{{!userInfo.isLogin}}" class="login-tip">点击头像登录</view>
+        <view wx:else class="user-status">已登录</view>
+      </view>
+      <view class="arrow">›</view>
+    </view>
+    
+    <!-- 退出登录按钮 -->
+    <view wx:if="{{userInfo.isLogin}}" class="logout-btn" bindtap="onLogout">
+      退出登录
+    </view>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-section">
+    <view 
+      wx:for="{{menuList}}" 
+      wx:key="title"
+      class="menu-item"
+      data-url="{{item.url}}"
+      data-title="{{item.title}}"
+      bindtap="onMenuTap"
+    >
+      <view class="menu-content">
+        <text class="menu-icon">{{item.icon}}</text>
+        <text class="menu-title">{{item.title}}</text>
+      </view>
+      <view wx:if="{{item.arrow}}" class="menu-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 其他信息 -->
+  <view class="info-section">
+    <view class="info-item">
+      <text class="info-label">版本号</text>
+      <text class="info-value">v1.0.0</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">关于我们</text>
+      <view class="info-arrow">›</view>
+    </view>
+  </view>
+</view>
