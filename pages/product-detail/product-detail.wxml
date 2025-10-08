@@ -1,0 +1,239 @@
+<!--pages/product-detail/product-detail.wxml-->
+<navigation-bar title="商品详情" showBack="{{true}}" textColor="black" backgroundColor="white" />
+
+<!-- 加载状态 -->
+<view wx:if="{{loading}}" class="loading-container">
+  <text>加载中...</text>
+</view>
+
+<!-- 主内容 -->
+<view wx:else class="container">
+  <!-- 商品图片轮播 -->
+  <view class="image-section">
+    <swiper 
+      class="image-swiper" 
+      indicator-dots="{{true}}"
+      indicator-color="rgba(255,255,255,0.5)"
+      indicator-active-color="#fff"
+      bindchange="onSwiperChange"
+    >
+      <swiper-item wx:for="{{product.images}}" wx:key="*this">
+        <image 
+          src="{{item}}" 
+          mode="aspectFill" 
+          class="product-image"
+          data-src="{{item}}"
+          bindtap="onImagePreview"
+        />
+      </swiper-item>
+    </swiper>
+    <view class="image-indicator">
+      {{selectedImageIndex + 1}}/{{product.images.length}}
+    </view>
+  </view>
+
+  <!-- 商品基本信息 -->
+  <view class="product-basic">
+    <view class="product-price">￥{{product.price}}</view>
+    <view class="product-title">{{product.name}}</view>
+    <view class="product-desc">{{product.description}}</view>
+    <view class="product-meta">
+      <text class="meta-item">品牌：{{product.brand}}</text>
+      <text class="meta-item">库存：{{product.stock}}{{product.unit}}</text>
+    </view>
+  </view>
+
+  <!-- 规格选择 -->
+  <view wx:if="{{product.specs && product.specs.length > 0}}" class="spec-section">
+    <view class="section-title">选择规格</view>
+    <view wx:for="{{product.specs}}" wx:key="name" class="spec-group">
+      <view class="spec-name">{{item.name}}</view>
+      <view class="spec-options">
+        <view 
+          wx:for="{{item.options}}" 
+          wx:for-item="option"
+          wx:key="*this"
+          class="spec-option {{selectedSpecs[item.name] === option ? 'selected' : ''}}"
+          data-spec-name="{{item.name}}"
+          data-option="{{option}}"
+          bindtap="onSpecSelect"
+        >
+          {{option}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品详细信息 -->
+  <view class="detail-info">
+    <view class="section-title">商品信息</view>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="info-label">商品名称</text>
+        <text class="info-value">{{product.name}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">品牌</text>
+        <text class="info-value">{{product.brand}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">单位</text>
+        <text class="info-value">{{product.unit}}</text>
+      </view>
+      <view wx:if="{{product.detailInfo}}" class="info-item">
+        <text class="info-label">生产日期</text>
+        <text class="info-value">{{product.detailInfo.productionDate}}</text>
+      </view>
+      <view wx:if="{{product.detailInfo}}" class="info-item">
+        <text class="info-label">保质期</text>
+        <text class="info-value">{{product.detailInfo.expiryDate}}</text>
+      </view>
+      <view wx:if="{{product.detailInfo}}" class="info-item">
+        <text class="info-label">产地</text>
+        <text class="info-value">{{product.detailInfo.origin}}</text>
+      </view>
+      <view wx:if="{{product.detailInfo}}" class="info-item">
+        <text class="info-label">生产商</text>
+        <text class="info-value">{{product.detailInfo.manufacturer}}</text>
+      </view>
+      <view wx:if="{{product.detailInfo}}" class="info-item">
+        <text class="info-label">配料表</text>
+        <text class="info-value">{{product.detailInfo.ingredients}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 营养成分 -->
+  <view wx:if="{{product.detailInfo && product.detailInfo.nutrition}}" class="nutrition-section">
+    <view class="section-title">营养成分表</view>
+    <view class="nutrition-list">
+      <view class="nutrition-item">
+        <text class="nutrition-label">能量</text>
+        <text class="nutrition-value">{{product.detailInfo.nutrition.energy}}</text>
+      </view>
+      <view class="nutrition-item">
+        <text class="nutrition-label">蛋白质</text>
+        <text class="nutrition-value">{{product.detailInfo.nutrition.protein}}</text>
+      </view>
+      <view class="nutrition-item">
+        <text class="nutrition-label">脂肪</text>
+        <text class="nutrition-value">{{product.detailInfo.nutrition.fat}}</text>
+      </view>
+      <view class="nutrition-item">
+        <text class="nutrition-label">碳水化合物</text>
+        <text class="nutrition-value">{{product.detailInfo.nutrition.carbohydrate}}</text>
+      </view>
+      <view class="nutrition-item">
+        <text class="nutrition-label">钠</text>
+        <text class="nutrition-value">{{product.detailInfo.nutrition.sodium}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品详细描述 -->
+  <view wx:if="{{product.detailDescription}}" class="description-section">
+    <view class="section-title">商品详情</view>
+    <view class="description-content">
+      {{product.detailDescription}}
+    </view>
+  </view>
+
+  <!-- 服务保障 -->
+  <view class="service-section">
+    <view class="section-title">服务保障</view>
+    <view class="service-list">
+      <view class="service-item">
+        <text class="service-icon">✓</text>
+        <text class="service-text">正品保障</text>
+      </view>
+      <view class="service-item">
+        <text class="service-icon">✓</text>
+        <text class="service-text">快速配送</text>
+      </view>
+      <view class="service-item">
+        <text class="service-icon">✓</text>
+        <text class="service-text">售后服务</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 底部操作栏 -->
+<view class="bottom-bar">
+  <view class="action-buttons">
+    <view class="contact-service" bindtap="onContactService">
+      <text class="action-icon">📞</text>
+      <text class="action-text">客服</text>
+    </view>
+    <view class="favorite" bindtap="onToggleFavorite">
+      <text class="action-icon">♥</text>
+      <text class="action-text">收藏</text>
+    </view>
+  </view>
+  <view class="purchase-buttons">
+    <view class="add-cart-btn" bindtap="onAddToCart">
+      加入购物车
+    </view>
+    <view class="buy-now-btn" bindtap="onBuyNow">
+      立即购买
+    </view>
+  </view>
+</view>
+
+<!-- 规格选择模态框 -->
+<view wx:if="{{showSpecModal}}" class="spec-modal">
+  <view class="spec-mask" bindtap="hideSpecModal"></view>
+  <view class="spec-content">
+    <view class="spec-header">
+      <view class="spec-product">
+        <image src="{{product.images[0]}}" class="spec-product-image" />
+        <view class="spec-product-info">
+          <view class="spec-product-price">￥{{product.price}}</view>
+          <view class="spec-product-name">{{product.name}}</view>
+        </view>
+      </view>
+      <view class="spec-close" bindtap="hideSpecModal">×</view>
+    </view>
+    
+    <view class="spec-body">
+      <!-- 规格选择 -->
+      <view wx:for="{{product.specs}}" wx:key="name" class="spec-group">
+        <view class="spec-name">{{item.name}}</view>
+        <view class="spec-options">
+          <view 
+            wx:for="{{item.options}}" 
+            wx:for-item="option"
+            wx:key="*this"
+            class="spec-option {{selectedSpecs[item.name] === option ? 'selected' : ''}}"
+            data-spec-name="{{item.name}}"
+            data-option="{{option}}"
+            bindtap="onSpecSelect"
+          >
+            {{option}}
+          </view>
+        </view>
+      </view>
+      
+      <!-- 数量选择 -->
+      <view class="quantity-section">
+        <view class="quantity-label">数量</view>
+        <view class="quantity-controls">
+          <view class="quantity-btn" bindtap="onQuantityDecrease">-</view>
+          <input 
+            class="quantity-input" 
+            type="number" 
+            value="{{quantity}}"
+            bindinput="onQuantityInput"
+          />
+          <view class="quantity-btn" bindtap="onQuantityIncrease">+</view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="spec-footer">
+      <view class="confirm-btn" bindtap="onConfirmSpec">
+        确定
+      </view>
+    </view>
+  </view>
+</view>
