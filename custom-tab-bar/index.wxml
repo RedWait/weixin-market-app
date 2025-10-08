@@ -1,0 +1,16 @@
+<t-tab-bar value="{{list[selected].text}}" bind:change="onChange" split="{{false}}">
+  <t-tab-bar-item 
+    wx:for="{{list}}" 
+    wx:key="index" 
+    value="{{item.text}}"
+    data-index="{{index}}"
+    bind:tap="onTabTap"
+  >
+    <view slot="icon">
+      <t-icon name="{{item.iconPath}}" size="48rpx" color="{{selected === index ? selectedColor : color}}" />
+      <!-- 购物车徽章 -->
+      <t-badge wx:if="{{index === 1 && cartCount > 0}}" count="{{cartCount}}" offset="[10, -10]" />
+    </view>
+    <view slot="text">{{item.text}}</view>
+  </t-tab-bar-item>
+</t-tab-bar>
