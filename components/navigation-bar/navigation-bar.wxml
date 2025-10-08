@@ -1,0 +1,35 @@
+<view class="weui-navigation-bar {{extClass}}" style="{{background ? 'background:' + background : ''}};{{displayStyle}};{{safeAreaTop}}">
+  <view class="weui-navigation-bar__inner {{ios ? 'ios' : 'android'}}" style="{{color ? 'color:' + color : ''}};{{innerPaddingRight}}">
+    <view class="weui-navigation-bar__left" style="{{leftWidth}}">
+      <block wx:if="{{back}}">
+        <view class="weui-navigation-bar__btn weui-navigation-bar__btn_goback" bindtap="back">
+          <view class="weui-navigation-bar__btn-icon">
+            <icon type="back" size="18" color="{{color || '#000'}}"/>
+          </view>
+        </view>
+      </block>
+      <block wx:if="{{homeButton}}">
+        <navigator class="weui-navigation-bar__btn weui-navigation-bar__btn_goback" open-type="switchTab" url="/pages/index/index">
+          <view class="weui-navigation-bar__btn-icon">
+            <icon type="home" size="18" color="{{color || '#000'}}"/>
+          </view>
+        </navigator>
+      </block>
+      <slot name="left"></slot>
+    </view>
+    <view class="weui-navigation-bar__center">
+      <block wx:if="{{loading}}">
+        <view class="weui-navigation-bar__loading">
+          <icon type="loading" size="18" color="{{color || '#000'}}"/>
+        </view>
+      </block>
+      <block wx:else>
+        <text class="weui-navigation-bar__title">{{title}}</text>
+      </block>
+      <slot name="center"></slot>
+    </view>
+    <view class="weui-navigation-bar__right">
+      <slot name="right"></slot>
+    </view>
+  </view>
+</view>
