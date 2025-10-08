@@ -1,0 +1,20 @@
+{
+  "name": "market-weapp",
+  "version": "1.0.0",
+  "description": "微信小程序商城项目",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "market",
+    "tdesign"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tdesign-miniprogram": "^1.4.4"
+  }
+}
